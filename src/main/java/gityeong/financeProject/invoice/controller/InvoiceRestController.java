@@ -22,7 +22,7 @@ public class InvoiceRestController {
     }
 
     //Expose "*/employees" and return a list of employee
-    @GetMapping("/employees")
+    @GetMapping("/invoices")
     public List<Invoice> findAll(){
         return invoiceService.findAll();
     }
