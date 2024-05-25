@@ -3,26 +3,26 @@ package gityeong.financeProject.departments.sales.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name="salesdept")
 public class Sale {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name="id")
+        private int id;
 
-    @Column(name="task_id")
-    private int taskId;
+        @Column(name="task_id")
+        private int taskId;
 
-    @Column(name="task_description")
-    private String taskDescription;
+        @Column(name="task_description")
+        private String taskDescription;
 
-    @Column(name="task_complete_status")
-    private String taskCompleteStatus;
+        @Column(name="task_complete_status")
+        private boolean taskCompleteStatus;
 
     public Sale() {
     }
 
-    public Sale(int taskId, String taskDescription, String taskCompleteStatus) {
+    public Sale(int taskId, String taskDescription, boolean taskCompleteStatus) {
         this.taskId = taskId;
         this.taskDescription = taskDescription;
         this.taskCompleteStatus = taskCompleteStatus;
@@ -52,11 +52,11 @@ public class Sale {
         this.taskDescription = taskDescription;
     }
 
-    public String getTaskCompleteStatus() {
+    public boolean isTaskCompleteStatus() {
         return taskCompleteStatus;
     }
 
-    public void setTaskCompleteStatus(String taskCompleteStatus) {
+    public void setTaskCompleteStatus(boolean taskCompleteStatus) {
         this.taskCompleteStatus = taskCompleteStatus;
     }
 
@@ -66,7 +66,7 @@ public class Sale {
                 "id=" + id +
                 ", taskId=" + taskId +
                 ", taskDescription='" + taskDescription + '\'' +
-                ", taskCompleteStatus='" + taskCompleteStatus + '\'' +
+                ", taskCompleteStatus=" + taskCompleteStatus +
                 '}';
     }
 }
