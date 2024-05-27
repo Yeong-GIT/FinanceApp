@@ -1,11 +1,12 @@
 package gityeong.financeProject.invoice.service;
 
+import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 
 import java.util.List;
 
 public interface InvoiceService {
-    List<Invoice> findAll();
+    List<InvoiceCustomerDTO> findAll();
 
     Invoice findById(int theId);
 

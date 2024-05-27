@@ -1,6 +1,7 @@
 package gityeong.financeProject.invoice.service;
 
 import gityeong.financeProject.invoice.dao.InvoiceDAO;
+import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class InvoiceServiceImpl implements InvoiceService{
     }
 
     @Override
-    public List<Invoice> findAll() {
+    public List<InvoiceCustomerDTO> findAll() {
         return invoiceDAO.findAll();
     }
 

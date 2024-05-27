@@ -1,5 +1,6 @@
 package gityeong.financeProject.customer.entity;
 
+import gityeong.financeProject.invoice.entity.Invoice;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -29,6 +30,9 @@ public class Customer {
 
     @Column(name="phone_no")
     private String phoneNo;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Invoice> invoices;
 
     //define empty constructors
     public Customer() {

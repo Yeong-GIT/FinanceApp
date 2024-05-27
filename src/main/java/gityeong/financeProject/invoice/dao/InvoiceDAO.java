@@ -1,12 +1,15 @@
 package gityeong.financeProject.invoice.dao;
 
+import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 
 import java.util.List;
 
 public interface InvoiceDAO {
 
-    List<Invoice> findAll();
+    List<InvoiceCustomerDTO> findAll();
+
+
 
     Invoice findById(int theId);
 

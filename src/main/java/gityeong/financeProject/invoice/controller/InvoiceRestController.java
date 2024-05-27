@@ -1,5 +1,6 @@
 package gityeong.financeProject.invoice.controller;
 
+import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 import gityeong.financeProject.invoice.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class InvoiceRestController {
 
     //Expose "*/employees" and return a list of employee
     @GetMapping("/invoices")
-    public List<Invoice> findAll(){
+    public List<InvoiceCustomerDTO> findAll(){
         return invoiceService.findAll();
     }
 }

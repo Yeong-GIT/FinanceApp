@@ -1,7 +1,9 @@
 package gityeong.financeProject.invoice.entity;
 
+import gityeong.financeProject.customer.entity.Customer;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity
@@ -22,17 +24,21 @@ public class Invoice {
     private String description;
 
     @Column(name="total_due")
-    private double totalDue;
+    private BigDecimal totalDue;
 
     @Column(name="inv_approval_status")
     private boolean invApprovalStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     //define empty constructor
 
     public Invoice() {
     }
 
-    public Invoice(int invNo, Date createdDate, String description, double totalDue, boolean invApprovalStatus) {
+    public Invoice(int invNo, Date createdDate, String description, BigDecimal totalDue, boolean invApprovalStatus) {
         this.invNo = invNo;
         this.createdDate = createdDate;
         this.description = description;
@@ -72,11 +78,11 @@ public class Invoice {
         this.description = description;
     }
 
-    public double getTotalDue() {
+    public BigDecimal getTotalDue() {
         return totalDue;
     }
 
-    public void setTotalDue(double totalDue) {
+    public void setTotalDue(BigDecimal totalDue) {
         this.totalDue = totalDue;
     }
 
