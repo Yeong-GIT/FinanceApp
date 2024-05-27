@@ -138,4 +138,23 @@ public class InvoiceCustomerDTO {
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
+
+    @Override
+    public String toString() {
+        return "InvoiceCustomerDTO{" +
+                "invoiceId=" + invoiceId +
+                ", invNo=" + invNo +
+                ", createdDate=" + createdDate +
+                ", description='" + description + '\'' +
+                ", totalDue=" + totalDue +
+                ", invApprovalStatus=" + invApprovalStatus +
+                ", customerId=" + customerId +
+                ", accNo=" + accNo +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package gityeong.financeProject.invoice.service;
 
+import gityeong.financeProject.invoice.dto.CreateNewInvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 
@@ -10,4 +11,6 @@ public interface InvoiceService {
 
     List<InvoiceCustomerDTO> findByInvNo(int invoiceNumber);
 
+    void createNewInvoice(CreateNewInvoiceCustomerDTO createNewInvoiceCustomerDTO);
 }
+

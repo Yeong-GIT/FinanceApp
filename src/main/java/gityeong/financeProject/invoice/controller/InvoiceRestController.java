@@ -1,13 +1,12 @@
 package gityeong.financeProject.invoice.controller;
 
+import gityeong.financeProject.invoice.dto.CreateNewInvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 import gityeong.financeProject.invoice.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +32,12 @@ public class InvoiceRestController {
     @GetMapping("/invoices/{invoiceNumber}")
     public List<InvoiceCustomerDTO> findByInvNo(@PathVariable int invoiceNumber) {
         return invoiceService.findByInvNo(invoiceNumber);
+    }
+
+
+    @PostMapping("/invoices")
+    public ResponseEntity<String> createNewInvoice(@RequestBody CreateNewInvoiceCustomerDTO createNewInvoiceCustomerDTO) {
+        invoiceService.createNewInvoice(createNewInvoiceCustomerDTO);
+        return ResponseEntity.ok("New invoice created successfully");
     }
 }

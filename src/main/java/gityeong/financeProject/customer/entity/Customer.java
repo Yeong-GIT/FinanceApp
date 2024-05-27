@@ -48,8 +48,6 @@ public class Customer {
         this.phoneNo = phone_no;
     }
 
-    //define getter and setters
-
     public int getId() {
         return id;
     }
@@ -58,28 +56,28 @@ public class Customer {
         this.id = id;
     }
 
-    public int getAcc_no() {
+    public int getAccNo() {
         return accNo;
     }
 
-    public void setAcc_no(int acc_no) {
-        this.accNo = acc_no;
+    public void setAccNo(int accNo) {
+        this.accNo = accNo;
     }
 
-    public String getFirst_name() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.firstName = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.lastName = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddress() {
@@ -98,26 +96,33 @@ public class Customer {
         this.email = email;
     }
 
-    public String getPhone_no() {
+    public String getPhoneNo() {
         return phoneNo;
     }
 
-    public void setPhone_no(String phone_no) {
-        this.phoneNo = phone_no;
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
-    //define toString
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
 
     @Override
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", acc_no=" + accNo +
-                ", first_name='" + firstName + '\'' +
-                ", last_name='" + lastName + '\'' +
+                ", accNo=" + accNo +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
-                ", phone_no='" + phoneNo + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", invoices=" + invoices +
                 '}';
     }
 }
