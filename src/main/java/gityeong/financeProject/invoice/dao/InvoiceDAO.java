@@ -9,13 +9,5 @@ public interface InvoiceDAO {
 
     List<InvoiceCustomerDTO> findAll();
 
-
-
-    Invoice findById(int theId);
-
-    Invoice create(Invoice theInvoice);
-
-    Invoice update(Invoice theInvoice);
-
-    void deleteById(int theId);
+    List<InvoiceCustomerDTO> findByInvNo(int invoiceNumber);
 }

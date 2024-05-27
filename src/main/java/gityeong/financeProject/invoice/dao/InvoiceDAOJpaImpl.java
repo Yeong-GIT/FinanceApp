@@ -1,7 +1,6 @@
 package gityeong.financeProject.invoice.dao;
 
 import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
-import gityeong.financeProject.invoice.entity.Invoice;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,22 +33,16 @@ public class InvoiceDAOJpaImpl implements InvoiceDAO{
     }
 
     @Override
-    public Invoice findById(int theId) {
-        return null;
-    }
+    public List<InvoiceCustomerDTO> findByInvNo(int invoiceNumber) {
+        TypedQuery<InvoiceCustomerDTO> theQuery = entityManager.createQuery(
+                "SELECT new gityeong.financeProject.invoice.dto.InvoiceCustomerDTO(i.id, i.invNo, i.createdDate, i.description, i.totalDue, i.invApprovalStatus, c.id, c.accNo, c.firstName, c.lastName, c.address, c.email, c.phoneNo) FROM Invoice i JOIN Customer c ON i.customer.id = c.id WHERE i.invNo = :invoiceNumber",
+                InvoiceCustomerDTO.class);
 
-    @Override
-    public Invoice create(Invoice theInvoice) {
-        return null;
-    }
+        // Set the parameter value for the invoice number
+        theQuery.setParameter("invoiceNumber", invoiceNumber);
 
-    @Override
-    public Invoice update(Invoice theInvoice) {
-        return null;
-    }
-
-    @Override
-    public void deleteById(int theId) {
-
+        // Execute query and get result list
+        List<InvoiceCustomerDTO> invoices = theQuery.getResultList();
+        return invoices;
     }
 }

@@ -5,6 +5,7 @@ import gityeong.financeProject.invoice.entity.Invoice;
 import gityeong.financeProject.invoice.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +27,11 @@ public class InvoiceRestController {
     @GetMapping("/invoices")
     public List<InvoiceCustomerDTO> findAll(){
         return invoiceService.findAll();
+    }
+
+    // Expose "/invoices/{invoiceNumber}" and return invoices by invoice number
+    @GetMapping("/invoices/{invoiceNumber}")
+    public List<InvoiceCustomerDTO> findByInvNo(@PathVariable int invoiceNumber) {
+        return invoiceService.findByInvNo(invoiceNumber);
     }
 }

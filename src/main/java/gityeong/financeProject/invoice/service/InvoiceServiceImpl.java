@@ -11,6 +11,8 @@ import java.util.List;
 public class InvoiceServiceImpl implements InvoiceService{
 
     private InvoiceDAO invoiceDAO;
+
+
     public InvoiceServiceImpl(InvoiceDAO theInvoiceDAO) {
         invoiceDAO = theInvoiceDAO;
     }
@@ -21,22 +23,7 @@ public class InvoiceServiceImpl implements InvoiceService{
     }
 
     @Override
-    public Invoice findById(int theId) {
-        return null;
-    }
-
-    @Override
-    public Invoice create(Invoice theInvoice) {
-        return null;
-    }
-
-    @Override
-    public Invoice update(Invoice theInvoice) {
-        return null;
-    }
-
-    @Override
-    public void deleteById(int theId) {
-
+    public List<InvoiceCustomerDTO> findByInvNo(int invoiceNumber) {
+        return invoiceDAO.findByInvNo(invoiceNumber);
     }
 }

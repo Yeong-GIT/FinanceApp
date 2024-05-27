@@ -8,11 +8,6 @@ import java.util.List;
 public interface InvoiceService {
     List<InvoiceCustomerDTO> findAll();
 
-    Invoice findById(int theId);
+    List<InvoiceCustomerDTO> findByInvNo(int invoiceNumber);
 
-    Invoice create(Invoice theInvoice);
-
-    Invoice update(Invoice theInvoice);
-
-    void deleteById(int theId);
 }
