@@ -5,6 +5,7 @@ import gityeong.financeProject.invoice.dto.CreateNewInvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,27 +55,69 @@ public class InvoiceDAOJpaImpl implements InvoiceDAO{
     @Override
     @Transactional
     public void createInv(CreateNewInvoiceCustomerDTO dto) {
-        // Check if the customer already exists
-        Customer customer = entityManager.find(Customer.class, dto.getCustomerId());
-        if (customer == null) {
-            // Create a new Customer entity from the DTO
-            customer = new Customer(dto.getAccNo().intValue(), dto.getFirstName(), dto.getLastName(), dto.getAddress(), dto.getEmail(), dto.getPhoneNo());
-            // Persist the customer entity
+        // Find the maximum invNo
+        TypedQuery<Integer> maxInvNoQuery = entityManager.createQuery(
+                "SELECT COALESCE(MAX(i.invNo), 0) FROM Invoice i", Integer.class);
+        int maxInvNo = maxInvNoQuery.getSingleResult();
+
+        // Increment the invNo by 1
+        int newInvNo = maxInvNo + 1;
+
+        // Check if the customer exists by account number
+        TypedQuery<Customer> customerQuery = entityManager.createQuery(
+                "SELECT c FROM Customer c WHERE c.accNo = :accNo", Customer.class);
+        customerQuery.setParameter("accNo", dto.getAccNo().intValue());
+        List<Customer> customers = customerQuery.getResultList();
+
+        Customer customer;
+        boolean isNewCustomer = false;
+        if (!customers.isEmpty()) {
+            // Use the existing customer if found
+            customer = customers.get(0);
+        } else {
+            // Find the maximum customerId
+            TypedQuery<Integer> maxCustomerIdQuery = entityManager.createQuery(
+                    "SELECT COALESCE(MAX(c.id), 0) FROM Customer c", Integer.class);
+            int maxCustomerId = maxCustomerIdQuery.getSingleResult();
+
+            // Increment the customerId by 1
+            int newCustomerId = maxCustomerId + 1;
+
+            // Create a new customer if not found
+            customer = new Customer();
+            customer.setAccNo(dto.getAccNo().intValue());
+            customer.setFirstName(dto.getFirstName());
+            customer.setLastName(dto.getLastName());
+            customer.setAddress(dto.getAddress());
+            customer.setEmail(dto.getEmail());
+            customer.setPhoneNo(dto.getPhoneNo());
             entityManager.persist(customer);
+
+            isNewCustomer = true;
         }
 
         // Create a new Invoice entity from the DTO
         Invoice invoice = new Invoice();
-        invoice.setInvNo((int)(Math.random() * 100000)); // or generate unique number as per requirement
-        invoice.setCreatedDate(new Date(System.currentTimeMillis()));
+        invoice.setInvNo(newInvNo);
+        invoice.setCreatedDate(new Date(System.currentTimeMillis())); // Use java.sql.Date
         invoice.setDescription(dto.getDescription());
         invoice.setTotalDue(dto.getTotalDue());
-        invoice.setInvApprovalStatus(false); // Default approval status
-
-        // Set the customer for the invoice
+        invoice.setInvApprovalStatus(false); // Assuming new invoices are not approved initially
         invoice.setCustomer(customer);
 
-        // Persist the invoice entity
         entityManager.persist(invoice);
+
+
+        // Construct the response message
+        String message;
+        if (isNewCustomer) {
+            message = "New customer created with account number " + dto.getAccNo() + ".";
+        } else {
+            message = "Existing customer with account number " + dto.getAccNo() + " used.";
+        }
+
+        // You can return this message as a part of your API response or log it
+        System.out.println(message);
     }
+
 }
