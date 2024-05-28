@@ -1,6 +1,7 @@
 package gityeong.financeProject.invoice.dao;
 
 import gityeong.financeProject.customer.entity.Customer;
+import gityeong.financeProject.departments.sales.entity.Sale;
 import gityeong.financeProject.invoice.dto.CreateNewInvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.UpdateInvoiceDTO;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class InvoiceDAOJpaImpl implements InvoiceDAO{
@@ -66,37 +68,7 @@ public class InvoiceDAOJpaImpl implements InvoiceDAO{
         int newInvNo = maxInvNo + 1;
 
         // Check if the customer exists by account number
-        TypedQuery<Customer> customerQuery = entityManager.createQuery(
-                "SELECT c FROM Customer c WHERE c.accNo = :accNo", Customer.class);
-        customerQuery.setParameter("accNo", dto.getAccNo().intValue());
-        List<Customer> customers = customerQuery.getResultList();
-
-        Customer customer;
-        boolean isNewCustomer = false;
-        if (!customers.isEmpty()) {
-            // Use the existing customer if found
-            customer = customers.get(0);
-        } else {
-            // Find the maximum customerId
-            TypedQuery<Integer> maxCustomerIdQuery = entityManager.createQuery(
-                    "SELECT COALESCE(MAX(c.id), 0) FROM Customer c", Integer.class);
-            int maxCustomerId = maxCustomerIdQuery.getSingleResult();
-
-            // Increment the customerId by 1
-            int newCustomerId = maxCustomerId + 1;
-
-            // Create a new customer if not found
-            customer = new Customer();
-            customer.setAccNo(dto.getAccNo().intValue());
-            customer.setFirstName(dto.getFirstName());
-            customer.setLastName(dto.getLastName());
-            customer.setAddress(dto.getAddress());
-            customer.setEmail(dto.getEmail());
-            customer.setPhoneNo(dto.getPhoneNo());
-            entityManager.persist(customer);
-
-            isNewCustomer = true;
-        }
+        Customer customer = entityManager.find(Customer.class, dto.getCustomerId());
 
         // Create a new Invoice entity from the DTO
         Invoice invoice = new Invoice();
@@ -109,16 +81,21 @@ public class InvoiceDAOJpaImpl implements InvoiceDAO{
 
         entityManager.persist(invoice);
 
+        // Find the maximum taskId from the salesdept table
+        Integer maxTaskId = entityManager.createQuery("SELECT MAX(s.taskId) FROM Sale s", Integer.class)
+                .getSingleResult();
+        int newTaskId = (maxTaskId == null ? 0 : maxTaskId) + 1;
+
+        Sale task = new Sale();
+        task.setTaskId(newTaskId);
+        task.setTaskDescription(dto.getTaskDescription());
+        task.setTaskCompleteStatus(dto.isTaskCompleteStatus());
+        task.setInvoice(invoice);
+
+        entityManager.persist(task);
 
         // Construct the response message
-        String message;
-        if (isNewCustomer) {
-            message = "New customer created with account number " + dto.getAccNo() + ".";
-        } else {
-            message = "Existing customer with account number " + dto.getAccNo() + " used.";
-        }
-
-        // You can return this message as a part of your API response or log it
+        String message = "Invoice created for customer with account number " + customer.getAccNo() + ".";
         System.out.println(message);
     }
 
@@ -129,10 +106,20 @@ public class InvoiceDAOJpaImpl implements InvoiceDAO{
         if (invoice == null) {
             throw new IllegalArgumentException("Invoice with ID " + invoiceId + " not found");
         }
+
+        // Update invoice fields
         invoice.setDescription(dto.getDescription());
         invoice.setTotalDue(dto.getTotalDue());
         invoice.setCreatedDate(new Date(System.currentTimeMillis()));
+
+        // If you want to update the associated task as well, do it here
+        Sale task = invoice.getTask();
+        if (task != null) {
+            task.setTaskDescription(dto.getTaskDescription());
+            task.setTaskCompleteStatus(dto.isTaskCompleteStatus());
+        }
     }
+
 
     @Override
     @Transactional
@@ -141,7 +128,16 @@ public class InvoiceDAOJpaImpl implements InvoiceDAO{
         if (invoice == null) {
             throw new EntityNotFoundException("Invoice with ID " + invoiceId + " not found");
         }
+
+        // Delete the associated task if it exists
+        Sale task = invoice.getTask();
+        if (task != null) {
+            entityManager.remove(task);
+        }
+
+        // Remove the invoice
         entityManager.remove(invoice);
     }
+
 
 }

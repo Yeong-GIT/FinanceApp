@@ -7,28 +7,20 @@ import java.util.Date;
 public class CreateNewInvoiceCustomerDTO {
 
     private int customerId;
-    private BigInteger accNo;
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String email;
-    private String phoneNo;
     private String description;
     private BigDecimal totalDue;
+    private String taskDescription; // Task description
+    private boolean taskCompleteStatus; // Task complete status
 
     public CreateNewInvoiceCustomerDTO() {
     }
 
-    public CreateNewInvoiceCustomerDTO(int customerId, BigInteger accNo, String firstName, String lastName, String address, String email, String phoneNo, String description, BigDecimal totalDue) {
+    public CreateNewInvoiceCustomerDTO(int customerId, String description, BigDecimal totalDue, String taskDescription, boolean taskCompleteStatus) {
         this.customerId = customerId;
-        this.accNo = accNo;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.email = email;
-        this.phoneNo = phoneNo;
         this.description = description;
         this.totalDue = totalDue;
+        this.taskDescription = taskDescription;
+        this.taskCompleteStatus = taskCompleteStatus;
     }
 
     public int getCustomerId() {
@@ -39,53 +31,6 @@ public class CreateNewInvoiceCustomerDTO {
         this.customerId = customerId;
     }
 
-    public BigInteger getAccNo() {
-        return accNo;
-    }
-
-    public void setAccNo(BigInteger accNo) {
-        this.accNo = accNo;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNo() {
-        return phoneNo;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
 
     public String getDescription() {
         return description;
@@ -103,18 +48,30 @@ public class CreateNewInvoiceCustomerDTO {
         this.totalDue = totalDue;
     }
 
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public boolean isTaskCompleteStatus() {
+        return taskCompleteStatus;
+    }
+
+    public void setTaskCompleteStatus(boolean taskCompleteStatus) {
+        this.taskCompleteStatus = taskCompleteStatus;
+    }
+
     @Override
     public String toString() {
         return "CreateNewInvoiceCustomerDTO{" +
                 "customerId=" + customerId +
-                ", accNo=" + accNo +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNo='" + phoneNo + '\'' +
                 ", description='" + description + '\'' +
                 ", totalDue=" + totalDue +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", taskCompleteStatus=" + taskCompleteStatus +
                 '}';
     }
 }

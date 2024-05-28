@@ -1,5 +1,9 @@
 package gityeong.financeProject.invoice.controller;
 
+import gityeong.financeProject.customer.dao.CustomerRepository;
+import gityeong.financeProject.customer.dto.CreateCustomerDTO;
+import gityeong.financeProject.customer.dto.CustomerDTO;
+import gityeong.financeProject.customer.entity.Customer;
 import gityeong.financeProject.invoice.dto.CreateNewInvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.UpdateInvoiceDTO;
@@ -10,20 +14,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/api")
 public class InvoiceRestController {
 
     private InvoiceService invoiceService;
+    private CustomerRepository customerRepository;
 
     @Autowired
-
-    public InvoiceRestController(InvoiceService theInvoiceService) {
+    public InvoiceRestController(InvoiceService theInvoiceService, CustomerRepository theCustomerRepository) {
         invoiceService = theInvoiceService;
+        customerRepository = theCustomerRepository;
     }
 
-    //Expose "*/employees" and return a list of employee
+    //Expose "*/employees" and return a list of invoices
     @GetMapping("/invoices")
     public List<InvoiceCustomerDTO> findAll(){
         return invoiceService.findAll();
@@ -42,7 +49,7 @@ public class InvoiceRestController {
         return ResponseEntity.ok("New invoice created successfully");
     }
 
-    @PutMapping("/invoices/update/{invoiceId}")
+    @PutMapping("/invoices/{invoiceId}")
     public String updateInvoice(@PathVariable int invoiceId, @RequestBody UpdateInvoiceDTO updateInvoiceDTO) {
         invoiceService.updateInvoice(invoiceId, updateInvoiceDTO);
         return "Invoice updated successfully.";

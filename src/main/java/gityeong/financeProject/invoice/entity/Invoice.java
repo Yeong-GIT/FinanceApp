@@ -1,6 +1,7 @@
 package gityeong.financeProject.invoice.entity;
 
 import gityeong.financeProject.customer.entity.Customer;
+import gityeong.financeProject.departments.sales.entity.Sale;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -33,17 +34,23 @@ public class Invoice {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @OneToOne(mappedBy = "invoice")
+    private Sale task;
+
     //define empty constructor
 
     public Invoice() {
     }
 
-    public Invoice(int invNo, Date createdDate, String description, BigDecimal totalDue, boolean invApprovalStatus) {
+    public Invoice(int id, int invNo, Date createdDate, String description, BigDecimal totalDue, boolean invApprovalStatus, Customer customer, Sale task) {
+        this.id = id;
         this.invNo = invNo;
         this.createdDate = createdDate;
         this.description = description;
         this.totalDue = totalDue;
         this.invApprovalStatus = invApprovalStatus;
+        this.customer = customer;
+        this.task = task;
     }
 
     public int getId() {
@@ -102,6 +109,14 @@ public class Invoice {
         this.customer = customer;
     }
 
+    public Sale getTask() {
+        return task;
+    }
+
+    public void setTask(Sale task) {
+        this.task = task;
+    }
+
     @Override
     public String toString() {
         return "Invoice{" +
@@ -111,6 +126,8 @@ public class Invoice {
                 ", description='" + description + '\'' +
                 ", totalDue=" + totalDue +
                 ", invApprovalStatus=" + invApprovalStatus +
+                ", customer=" + customer +
+                ", task=" + task +
                 '}';
     }
 }

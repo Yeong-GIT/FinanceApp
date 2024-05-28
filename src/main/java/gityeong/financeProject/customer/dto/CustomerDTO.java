@@ -1,63 +1,34 @@
-package gityeong.financeProject.customer.entity;
+package gityeong.financeProject.customer.dto;
 
-import gityeong.financeProject.invoice.entity.Invoice;
-import jakarta.persistence.*;
+public class CustomerDTO {
 
-import java.util.List;
-import java.util.Random;
-
-@Entity
-@Table(name="customer")
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
     private int id;
-
-    @Column(name="acc_no", unique = true)
     private int accNo;
-
-    @Column(name="first_name")
     private String firstName;
-
-    @Column(name="last_name")
     private String lastName;
-
-    @Column(name="address")
     private String address;
-
-    @Column(name="email")
     private String email;
-
-    @Column(name="phone_no")
     private String phoneNo;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Invoice> invoices;
-
-    //define empty constructors
-    public Customer() {
+    public CustomerDTO() {
     }
 
-    //define constructors
-    public Customer(String first_name, String last_name, String address, String email, String phone_no) {
-        this.firstName = first_name;
-        this.lastName = last_name;
+    public CustomerDTO(int id, int accNo, String firstName, String lastName, String address, String email, String phoneNo) {
+        this.id = id;
+        this.accNo = accNo;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.address = address;
         this.email = email;
-        this.phoneNo = phone_no;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        if (accNo == 0) {
-            Random random = new Random();
-            this.accNo = 100000 + random.nextInt(900000); // Generate a 6-digit random number
-        }
+        this.phoneNo = phoneNo;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getAccNo() {
@@ -108,17 +79,9 @@ public class Customer {
         this.phoneNo = phoneNo;
     }
 
-    public List<Invoice> getInvoices() {
-        return invoices;
-    }
-
-    public void setInvoices(List<Invoice> invoices) {
-        this.invoices = invoices;
-    }
-
     @Override
     public String toString() {
-        return "Customer{" +
+        return "CustomerDTO{" +
                 "id=" + id +
                 ", accNo=" + accNo +
                 ", firstName='" + firstName + '\'' +
@@ -126,7 +89,6 @@ public class Customer {
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNo='" + phoneNo + '\'' +
-                ", invoices=" + invoices +
                 '}';
     }
 }

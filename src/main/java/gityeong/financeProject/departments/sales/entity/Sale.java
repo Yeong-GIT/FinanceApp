@@ -1,23 +1,28 @@
 package gityeong.financeProject.departments.sales.entity;
 
+import gityeong.financeProject.invoice.entity.Invoice;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="salesdept")
 public class Sale {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name="id")
-        private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private int id;
 
-        @Column(name="task_id")
-        private int taskId;
+    @Column(name = "task_id", unique = true, nullable = false)
+    private int taskId;
 
-        @Column(name="task_description")
-        private String taskDescription;
+    @Column(name="task_description")
+    private String taskDescription;
 
-        @Column(name="task_complete_status")
-        private boolean taskCompleteStatus;
+    @Column(name="task_complete_status")
+    private boolean taskCompleteStatus;
+
+    @OneToOne
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 
     public Sale() {
     }
@@ -26,6 +31,14 @@ public class Sale {
         this.taskId = taskId;
         this.taskDescription = taskDescription;
         this.taskCompleteStatus = taskCompleteStatus;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
     public int getId() {

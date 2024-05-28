@@ -4,42 +4,60 @@ import java.math.BigDecimal;
 
 public class UpdateInvoiceDTO {
 
-        private int invoiceId;
-        private String description;
-        private BigDecimal totalDue;
-        private boolean invApprovalStatus;
+    private String description;
+    private BigDecimal totalDue;
+    private String taskDescription; // Task description
+    private boolean taskCompleteStatus; // Task complete status
 
-        // Getters and setters
+    public UpdateInvoiceDTO() {
+    }
 
-        public int getInvoiceId() {
-            return invoiceId;
-        }
+    public UpdateInvoiceDTO(String description, BigDecimal totalDue, String taskDescription, boolean taskCompleteStatus) {
+        this.description = description;
+        this.totalDue = totalDue;
+        this.taskDescription = taskDescription;
+        this.taskCompleteStatus = taskCompleteStatus;
+    }
 
-        public void setInvoiceId(int invoiceId) {
-            this.invoiceId = invoiceId;
-        }
+    public String getDescription() {
+        return description;
+    }
 
-        public String getDescription() {
-            return description;
-        }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-        public void setDescription(String description) {
-            this.description = description;
-        }
+    public BigDecimal getTotalDue() {
+        return totalDue;
+    }
 
-        public BigDecimal getTotalDue() {
-            return totalDue;
-        }
+    public void setTotalDue(BigDecimal totalDue) {
+        this.totalDue = totalDue;
+    }
 
-        public void setTotalDue(BigDecimal totalDue) {
-            this.totalDue = totalDue;
-        }
+    public String getTaskDescription() {
+        return taskDescription;
+    }
 
-        public boolean isInvApprovalStatus() {
-            return invApprovalStatus;
-        }
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
 
-        public void setInvApprovalStatus(boolean invApprovalStatus) {
-            this.invApprovalStatus = invApprovalStatus;
-        }
+    public boolean isTaskCompleteStatus() {
+        return taskCompleteStatus;
+    }
+
+    public void setTaskCompleteStatus(boolean taskCompleteStatus) {
+        this.taskCompleteStatus = taskCompleteStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateInvoiceDTO{" +
+                "description='" + description + '\'' +
+                ", totalDue=" + totalDue +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", taskCompleteStatus=" + taskCompleteStatus +
+                '}';
+    }
 }
