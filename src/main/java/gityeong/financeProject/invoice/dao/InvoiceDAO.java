@@ -16,4 +16,6 @@ public interface InvoiceDAO {
     void createInv(CreateNewInvoiceCustomerDTO createNewInvoiceCustomerDTO);
 
     void updateInvoice(int invoiceId, UpdateInvoiceDTO updateInvoiceDTO);
+
+    void deleteInvoice(int invoiceId);
 }

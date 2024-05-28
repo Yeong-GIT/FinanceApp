@@ -47,4 +47,10 @@ public class InvoiceRestController {
         invoiceService.updateInvoice(invoiceId, updateInvoiceDTO);
         return "Invoice updated successfully.";
     }
+
+    @DeleteMapping("/invoices/{invoiceId}")
+    public ResponseEntity<String> deleteInvoice(@PathVariable int invoiceId) {
+        invoiceService.deleteInvoice(invoiceId);
+        return ResponseEntity.ok("Invoice deleted successfully.");
+    }
 }

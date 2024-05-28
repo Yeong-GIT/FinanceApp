@@ -14,5 +14,7 @@ public interface InvoiceService {
     void createNewInvoice(CreateNewInvoiceCustomerDTO createNewInvoiceCustomerDTO);
 
     void updateInvoice(int invoiceId, UpdateInvoiceDTO updateInvoiceDTO);
+
+    void deleteInvoice(int invoiceId);
 }
 

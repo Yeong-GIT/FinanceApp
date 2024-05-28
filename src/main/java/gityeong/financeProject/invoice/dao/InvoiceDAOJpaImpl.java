@@ -6,6 +6,7 @@ import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.UpdateInvoiceDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -131,6 +132,16 @@ public class InvoiceDAOJpaImpl implements InvoiceDAO{
         invoice.setDescription(dto.getDescription());
         invoice.setTotalDue(dto.getTotalDue());
         invoice.setCreatedDate(new Date(System.currentTimeMillis()));
+    }
+
+    @Override
+    @Transactional
+    public void deleteInvoice(int invoiceId) {
+        Invoice invoice = entityManager.find(Invoice.class, invoiceId);
+        if (invoice == null) {
+            throw new EntityNotFoundException("Invoice with ID " + invoiceId + " not found");
+        }
+        entityManager.remove(invoice);
     }
 
 }

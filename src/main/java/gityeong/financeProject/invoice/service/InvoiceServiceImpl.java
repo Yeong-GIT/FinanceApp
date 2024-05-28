@@ -39,4 +39,10 @@ public class InvoiceServiceImpl implements InvoiceService{
     public void updateInvoice(int invoiceId, UpdateInvoiceDTO updateInvoiceDTO) {
         invoiceDAO.updateInvoice(invoiceId, updateInvoiceDTO);
     }
+
+    @Override
+    @Transactional
+    public void deleteInvoice(int invoiceId) {
+        invoiceDAO.deleteInvoice(invoiceId);
+    }
 }
