@@ -3,6 +3,7 @@ package gityeong.financeProject.invoice.dao;
 import gityeong.financeProject.customer.entity.Customer;
 import gityeong.financeProject.invoice.dto.CreateNewInvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
+import gityeong.financeProject.invoice.dto.UpdateInvoiceDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -118,6 +119,18 @@ public class InvoiceDAOJpaImpl implements InvoiceDAO{
 
         // You can return this message as a part of your API response or log it
         System.out.println(message);
+    }
+
+    @Override
+    @Transactional
+    public void updateInvoice(int invoiceId, UpdateInvoiceDTO dto) {
+        Invoice invoice = entityManager.find(Invoice.class, invoiceId);
+        if (invoice == null) {
+            throw new IllegalArgumentException("Invoice with ID " + invoiceId + " not found");
+        }
+        invoice.setDescription(dto.getDescription());
+        invoice.setTotalDue(dto.getTotalDue());
+        invoice.setCreatedDate(new Date(System.currentTimeMillis()));
     }
 
 }

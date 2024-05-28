@@ -2,6 +2,7 @@ package gityeong.financeProject.invoice.controller;
 
 import gityeong.financeProject.invoice.dto.CreateNewInvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
+import gityeong.financeProject.invoice.dto.UpdateInvoiceDTO;
 import gityeong.financeProject.invoice.entity.Invoice;
 import gityeong.financeProject.invoice.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,11 @@ public class InvoiceRestController {
     public ResponseEntity<String> createNewInvoice(@RequestBody CreateNewInvoiceCustomerDTO createNewInvoiceCustomerDTO) {
         invoiceService.createNewInvoice(createNewInvoiceCustomerDTO);
         return ResponseEntity.ok("New invoice created successfully");
+    }
+
+    @PutMapping("/invoices/update/{invoiceId}")
+    public String updateInvoice(@PathVariable int invoiceId, @RequestBody UpdateInvoiceDTO updateInvoiceDTO) {
+        invoiceService.updateInvoice(invoiceId, updateInvoiceDTO);
+        return "Invoice updated successfully.";
     }
 }
