@@ -1,7 +1,10 @@
 package gityeong.financeProject.departments.sales.entity;
 
+import gityeong.financeProject.departments.finance.entity.Finance;
 import gityeong.financeProject.invoice.entity.Invoice;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="salesdept")
@@ -24,13 +27,17 @@ public class Sale {
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
+    @OneToMany(mappedBy = "sale")
+    private List<Finance> financeTasks;
+
     public Sale() {
     }
 
-    public Sale(int taskId, String taskDescription, boolean taskCompleteStatus) {
+    public Sale(int taskId, String taskDescription, boolean taskCompleteStatus, Invoice invoice) {
         this.taskId = taskId;
         this.taskDescription = taskDescription;
         this.taskCompleteStatus = taskCompleteStatus;
+        this.invoice = invoice;
     }
 
     public Invoice getInvoice() {
@@ -80,6 +87,8 @@ public class Sale {
                 ", taskId=" + taskId +
                 ", taskDescription='" + taskDescription + '\'' +
                 ", taskCompleteStatus=" + taskCompleteStatus +
+                ", invoice=" + invoice +
+                ", financeTasks=" + financeTasks +
                 '}';
     }
 }

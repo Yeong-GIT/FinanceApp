@@ -1,5 +1,6 @@
 package gityeong.financeProject.departments.finance.entity;
 
+import gityeong.financeProject.departments.sales.entity.Sale;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,13 +20,27 @@ public class Finance {
     @Column(name="task_complete_status")
     private String taskCompleteStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "sale_id")
+    private Sale sale;
+
     public Finance() {
     }
 
-    public Finance(int taskId, String taskDescription, String taskCompleteStatus) {
+    public Finance(int id, int taskId, String taskDescription, String taskCompleteStatus, Sale sale) {
+        this.id = id;
         this.taskId = taskId;
         this.taskDescription = taskDescription;
         this.taskCompleteStatus = taskCompleteStatus;
+        this.sale = sale;
+    }
+
+    public Sale getSale() {
+        return sale;
+    }
+
+    public void setSale(Sale sale) {
+        this.sale = sale;
     }
 
     public int getId() {
@@ -67,6 +82,8 @@ public class Finance {
                 ", taskId=" + taskId +
                 ", taskDescription='" + taskDescription + '\'' +
                 ", taskCompleteStatus='" + taskCompleteStatus + '\'' +
+                ", sale=" + sale +
                 '}';
     }
+
 }

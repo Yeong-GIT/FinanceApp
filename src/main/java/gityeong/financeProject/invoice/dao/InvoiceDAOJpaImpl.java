@@ -1,6 +1,7 @@
 package gityeong.financeProject.invoice.dao;
 
 import gityeong.financeProject.customer.entity.Customer;
+import gityeong.financeProject.departments.finance.entity.Finance;
 import gityeong.financeProject.departments.sales.entity.Sale;
 import gityeong.financeProject.invoice.dto.CreateNewInvoiceCustomerDTO;
 import gityeong.financeProject.invoice.dto.InvoiceCustomerDTO;
@@ -93,6 +94,13 @@ public class InvoiceDAOJpaImpl implements InvoiceDAO{
         task.setInvoice(invoice);
 
         entityManager.persist(task);
+
+        Finance financeTask = new Finance();
+        financeTask.setTaskId(newTaskId); // Reuse the task ID or generate a new one if needed
+        financeTask.setTaskDescription("Approval task for invoice " + newInvNo);
+        financeTask.setTaskCompleteStatus("Pending");
+        financeTask.setSale(task);
+        entityManager.persist(financeTask);
 
         // Construct the response message
         String message = "Invoice created for customer with account number " + customer.getAccNo() + ".";
