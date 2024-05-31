@@ -4,8 +4,6 @@ import gityeong.backend.departments.finance.entity.Finance;
 import gityeong.backend.invoice.entity.Invoice;
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name="salesdept")
 public class Sale {

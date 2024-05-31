@@ -16,6 +16,7 @@ import java.util.List;
 public class InvoiceRestController {
 
     private InvoiceService invoiceService;
+    @SuppressWarnings("unused")
     private CustomerRepository customerRepository;
 
     @Autowired
